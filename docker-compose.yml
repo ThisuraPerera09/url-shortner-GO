@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  url-shortener:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - BASE_URL=http://localhost:8080
+      - DATABASE_PATH=/data/urlshortener.db
+      - SHORT_CODE_LEN=6
+      - USE_IN_MEMORY=false
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
