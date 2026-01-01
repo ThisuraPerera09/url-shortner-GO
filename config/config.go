@@ -19,7 +19,7 @@ func Load() *Config {
 		BaseURL:      getEnv("BASE_URL", "http://localhost:8080"),
 		DatabasePath: getEnv("DATABASE_PATH", "./urlshortener.db"),
 		ShortCodeLen: getEnvAsInt("SHORT_CODE_LEN", 6),
-		UseInMemory:  getEnvAsBool("USE_IN_MEMORY", false),
+		UseInMemory:  getEnvAsBool("USE_IN_MEMORY", true), // Changed default to true
 	}
 }
 

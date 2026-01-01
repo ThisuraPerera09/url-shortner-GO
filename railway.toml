@@ -1,0 +1,11 @@
+# Railway Configuration File
+# Place this in the root directory
+
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "go run main.go"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+

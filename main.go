@@ -23,7 +23,14 @@ func main() {
 	var store storage.Storage
 	var err error
 
-	if cfg.UseInMemory {
+	// Check for PostgreSQL connection string first (Railway provides this)
+	if dbURL := os.Getenv("DATABASE_URL"); dbURL != "" {
+		fmt.Println("🚀 Using PostgreSQL storage")
+		store, err = storage.NewPostgresStorage(dbURL)
+		if err != nil {
+			log.Fatalf("Failed to initialize PostgreSQL: %v", err)
+		}
+	} else if cfg.UseInMemory {
 		fmt.Println("🚀 Using in-memory storage")
 		store = storage.NewInMemoryStorage()
 	} else {
