@@ -1,0 +1,265 @@
+.stats {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.stats h2 {
+  text-align: center;
+  color: #333;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 1.1em;
+  margin-bottom: 40px;
+}
+
+.stats-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.stats-input {
+  flex: 1;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-family: 'Courier New', monospace;
+}
+
+.stats-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.stats-button {
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.stats-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.stats-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.stats-result {
+  animation: slideIn 0.5s ease;
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.stats-header h3 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.5em;
+}
+
+.url-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.url-badge a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  grid-column: 1 / -1;
+}
+
+.stat-icon {
+  font-size: 3em;
+  margin-bottom: 15px;
+}
+
+.stat-value {
+  font-size: 4em;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.stat-value-small {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #555;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-label {
+  font-size: 1em;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.original-url-section {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 30px;
+}
+
+.original-url-section h4 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.3em;
+  margin-bottom: 15px;
+}
+
+.original-url-link {
+  display: block;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  word-break: break-all;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.original-url-link:hover {
+  text-decoration: underline;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.stats-insights {
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+  padding: 25px;
+  border-radius: 15px;
+}
+
+.stats-insights h4 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.3em;
+  margin-bottom: 20px;
+}
+
+.insights-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.insight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.insight-label {
+  color: #666;
+  font-weight: 600;
+}
+
+.insight-value {
+  color: #333;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.insight-value.active {
+  color: #4CAF50;
+}
+
+.insight-value.inactive {
+  color: #2196F3;
+}
+
+.empty-stats {
+  text-align: center;
+  padding: 80px 20px;
+  color: #999;
+}
+
+.empty-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  opacity: 0.3;
+}
+
+.empty-stats h3 {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .stats h2 {
+    font-size: 2em;
+  }
+
+  .stats-form {
+    flex-direction: column;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card.primary {
+    grid-column: 1;
+  }
+
+  .stat-value {
+    font-size: 3em;
+  }
+}
+
