@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 )
 
 type Config struct {
@@ -14,9 +15,13 @@ type Config struct {
 }
 
 func Load() *Config {
+	baseURL := getEnv("BASE_URL", "http://localhost:8080")
+	// Remove trailing slash to avoid double slashes in URLs
+	baseURL = strings.TrimSuffix(baseURL, "/")
+
 	return &Config{
 		Port:         getEnv("PORT", "8080"),
-		BaseURL:      getEnv("BASE_URL", "http://localhost:8080"),
+		BaseURL:      baseURL,
 		DatabasePath: getEnv("DATABASE_PATH", "./urlshortener.db"),
 		ShortCodeLen: getEnvAsInt("SHORT_CODE_LEN", 6),
 		UseInMemory:  getEnvAsBool("USE_IN_MEMORY", true), // Changed default to true

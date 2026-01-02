@@ -40,9 +40,15 @@ func (h *URLHandler) ShortenURL(c *gin.Context) {
 		return
 	}
 
+	// Ensure baseURL doesn't end with slash to avoid double slashes
+	baseURL := h.baseURL
+	if len(baseURL) > 0 && baseURL[len(baseURL)-1] == '/' {
+		baseURL = baseURL[:len(baseURL)-1]
+	}
+
 	response := models.ShortenResponse{
 		ShortCode:   url.ShortCode,
-		ShortURL:    h.baseURL + "/" + url.ShortCode,
+		ShortURL:    baseURL + "/" + url.ShortCode,
 		OriginalURL: url.OriginalURL,
 	}
 
