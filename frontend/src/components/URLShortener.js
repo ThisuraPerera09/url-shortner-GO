@@ -23,6 +23,13 @@ function URLShortener({ onURLCreated }) {
       setLongUrl('');
       setCustomCode('');
       
+      // Save to localStorage for "My URLs" tracking
+      const myUrls = JSON.parse(localStorage.getItem('myUrls') || '[]');
+      if (!myUrls.includes(data.short_code)) {
+        myUrls.push(data.short_code);
+        localStorage.setItem('myUrls', JSON.stringify(myUrls));
+      }
+      
       if (onURLCreated) {
         onURLCreated();
       }

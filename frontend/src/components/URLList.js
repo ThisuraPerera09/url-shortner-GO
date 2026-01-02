@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import './URLList.css';
 
+// Helper to get base URL (without /api)
+const getBaseURL = () => {
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+  // Remove /api from the end
+  return apiUrl.replace(/\/api$/, '');
+};
+
 function URLList({ refresh, onViewStats }) {
   const [urls, setUrls] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,8 +24,18 @@ function URLList({ refresh, onViewStats }) {
     setError('');
     
     try {
-      const data = await api.listURLs();
-      setUrls(data.urls || []);
+      // Get all URLs from backend
+      const data = await api.listURLs(1000, 0); // Get a large number to filter client-side
+      
+      // Get user's URLs from localStorage
+      const myShortCodes = JSON.parse(localStorage.getItem('myUrls') || '[]');
+      
+      // Filter to only show URLs created by this user
+      const myUrls = (data.urls || []).filter(url => 
+        myShortCodes.includes(url.short_code)
+      );
+      
+      setUrls(myUrls);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -34,6 +51,13 @@ function URLList({ refresh, onViewStats }) {
     setDeletingId(shortCode);
     try {
       await api.deleteURL(shortCode);
+      
+      // Remove from localStorage
+      const myUrls = JSON.parse(localStorage.getItem('myUrls') || '[]');
+      const updatedUrls = myUrls.filter(code => code !== shortCode);
+      localStorage.setItem('myUrls', JSON.stringify(updatedUrls));
+      
+      // Update UI
       setUrls(urls.filter(url => url.short_code !== shortCode));
     } catch (err) {
       alert('Failed to delete: ' + err.message);
@@ -84,13 +108,20 @@ function URLList({ refresh, onViewStats }) {
   }
 
   if (urls.length === 0) {
+    const myShortCodes = JSON.parse(localStorage.getItem('myUrls') || '[]');
+    const hasUrlsInStorage = myShortCodes.length > 0;
+    
     return (
       <div className="url-list">
         <h2>📋 My URLs</h2>
         <div className="empty-state">
           <div className="empty-icon">🔗</div>
-          <h3>No URLs yet</h3>
-          <p>Create your first short URL to get started!</p>
+          <h3>{hasUrlsInStorage ? 'No URLs found' : 'No URLs yet'}</h3>
+          <p>
+            {hasUrlsInStorage 
+              ? 'Your URLs may have been deleted or expired. Create a new one to get started!'
+              : 'Create your first short URL to get started!'}
+          </p>
         </div>
       </div>
     );
@@ -118,15 +149,15 @@ function URLList({ refresh, onViewStats }) {
                 <label>Short URL:</label>
                 <div className="url-value">
                   <a
-                    href={`http://localhost:8080/${url.short_code}`}
+                    href={`${getBaseURL()}/${url.short_code}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="url-link"
                   >
-                    localhost:8080/{url.short_code}
+                    {getBaseURL().replace(/^https?:\/\//, '')}/{url.short_code}
                   </a>
                   <button
-                    onClick={() => copyToClipboard(`http://localhost:8080/${url.short_code}`)}
+                    onClick={() => copyToClipboard(`${getBaseURL()}/${url.short_code}`)}
                     className="mini-button"
                     title="Copy"
                   >
