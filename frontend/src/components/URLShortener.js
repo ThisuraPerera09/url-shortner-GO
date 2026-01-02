@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { api } from '../services/api';
 import './URLShortener.css';
 
+// Helper to get base URL (without /api)
+const getBaseURL = () => {
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+  // Remove /api from the end
+  return apiUrl.replace(/\/api$/, '');
+};
+
 function URLShortener({ onURLCreated }) {
   const [longUrl, setLongUrl] = useState('');
   const [customCode, setCustomCode] = useState('');
@@ -19,7 +26,10 @@ function URLShortener({ onURLCreated }) {
 
     try {
       const data = await api.shortenURL(longUrl, customCode);
-      setShortUrl(data.short_url);
+      // Construct URL using same logic as URLList to ensure consistency
+      // This also fixes any double-slash issues from backend
+      const shortUrlToDisplay = `${getBaseURL()}/${data.short_code}`;
+      setShortUrl(shortUrlToDisplay);
       setLongUrl('');
       setCustomCode('');
       
